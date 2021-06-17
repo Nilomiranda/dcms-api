@@ -66,6 +66,10 @@ GEM
     ffi (1.15.3)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    graphiql-rails (1.7.0)
+      railties
+      sprockets-rails
+    graphql (1.9.17)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     listen (3.5.1)
@@ -84,6 +88,7 @@ GEM
     nio4r (2.5.7)
     nokogiri (1.11.7-x86_64-darwin)
       racc (~> 1.4)
+    pg (1.2.3)
     puma (4.3.8)
       nio4r (~> 2.0)
     racc (1.5.2)
@@ -131,7 +136,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     thor (1.1.0)
     thread_safe (0.3.6)
     tzinfo (1.2.9)
@@ -147,12 +151,14 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
+  graphiql-rails (= 1.7.0)
+  graphql (= 1.9.17)
   listen (~> 3.2)
+  pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.7)
   spring
   spring-watcher-listen (~> 2.0.0)
-  sqlite3 (~> 1.4)
   tzinfo-data
 
 RUBY VERSION
