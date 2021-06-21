@@ -1,16 +1,19 @@
 class GraphqlController < ApplicationController
+  include ActionController::Cookies
+
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
 
   def execute
+    puts("cookies", cookies)
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      session: session,
+      current_user: current_user
     }
     result = DcmsSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -20,6 +23,16 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def current_user
+    return unless session[:token]
+
+    decoded_token = JWT.decode session[:token], nil, false
+
+    puts("decoded_token", decoded_token)
+
+    decoded_token
+  end
 
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)

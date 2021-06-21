@@ -1,5 +1,7 @@
 module Mutations
   class SignIn < BaseMutation
+    include ActionController::Cookies
+
     null true
 
     argument :credentials, Types::AuthProviderCredentialsInput, required: false
@@ -14,9 +16,8 @@ module Mutations
       user = User.find_by email: credentials[:email]
 
       return unless user
-      return {
-        error: 'Wrong credentials'
-      } if check_password(user, credentials[:password]).nil?
+
+      raise GraphQL::ExecutionError.new('Unauthorized', options: { status: :unauthorized, code: 401 }) if check_password(user, credentials[:password]).nil?
 
       token_payload = { user_id: user[:id], exp: Time.now.to_i + 1.week }
       token = JWT.encode token_payload, nil, 'none'
