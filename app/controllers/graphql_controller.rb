@@ -7,13 +7,13 @@ class GraphqlController < ApplicationController
   # protect_from_forgery with: :null_session
 
   def execute
-    puts("cookies", cookies)
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
     context = {
       session: session,
-      current_user: current_user
+      current_user: current_user,
+      cookies: cookies,
     }
     result = DcmsSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -25,13 +25,13 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    return unless session[:token]
+    return unless cookies[:token]
 
-    decoded_token = JWT.decode session[:token], nil, false
+    decoded_token = (JWT.decode cookies[:token], nil, false)[0]
 
-    puts("decoded_token", decoded_token)
+    return if decoded_token["user_id"].nil?
 
-    decoded_token
+    User.find_by(id: decoded_token["user_id"].to_i)
   end
 
   # Handle form data, JSON body, or a blank value
