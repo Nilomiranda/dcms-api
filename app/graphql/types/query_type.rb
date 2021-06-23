@@ -6,8 +6,8 @@ module Types
     # queries are just represented as fields
     # `all_links` is automatically camelcased to `allLinks`
     field :all_links, resolver: Resolvers::AllLinks
-    field :posts, Types::PostType.connection_type, null: false
 
+    field :posts, Types::PostType.connection_type, null: false, max_page_size: 20
     def posts
       Post.where(user_id: context[:current_user][:id])
     end
