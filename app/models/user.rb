@@ -1,4 +1,5 @@
 require 'faker'
+require_relative '../validators/email_validator'
 
 class User < ApplicationRecord
   has_secure_password
@@ -6,7 +7,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
 
   validates :name, presence: true
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, email: true
 
   before_save :generate_application_code
 
