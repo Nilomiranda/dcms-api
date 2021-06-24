@@ -5,5 +5,6 @@ module Types
     field :sign_in, mutation: Mutations::SignIn
     field :create_user_post, mutation: Mutations::CreateUserPost
     field :delete_user_post, mutation: Mutations::DeleteUserPost
+    field :update_user_post, mutation: Mutations::UpdateUserPost
   end
 end
