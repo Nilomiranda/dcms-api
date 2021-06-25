@@ -11,5 +11,12 @@ module Types
 
       Post.where(user_id: context[:current_user][:id])
     end
+
+    field :user, Types::UserType, { null: false }
+    def user
+      ProtectedResource.ensure_authenticated context
+
+      context[:current_user]
+    end
   end
 end
