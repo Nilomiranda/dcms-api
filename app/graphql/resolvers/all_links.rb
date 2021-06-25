@@ -3,7 +3,6 @@ module Resolvers
     type [Types::LinkType], null: false
 
     def resolve
-
       Link.all
     end
   end
