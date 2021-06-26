@@ -18,5 +18,12 @@ module Types
 
       context[:current_user]
     end
+
+    field :allowed_websites, Types::AllowedWebsiteType.connection_type, null: false, max_page_size: 20
+    def allowed_websites
+      ProtectedResource.ensure_authenticated context
+
+      AllowedWebsite.where(user_id: context[:current_user][:id])
+    end
   end
 end
