@@ -1,5 +1,4 @@
 require 'faker'
-require_relative '../validators/email_validator'
 
 class User < ApplicationRecord
   has_secure_password
