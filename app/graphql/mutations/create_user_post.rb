@@ -11,7 +11,7 @@ module Mutations
 
       user_post = Post.create!(
         title: post_data[:title],
-        content: post_data[:title],
+        content: post_data[:content],
         published: post_data[:published],
         user_id: context[:current_user][:id]
       )
